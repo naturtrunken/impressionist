@@ -46,6 +46,25 @@ describe Impression do
          widget.reload
        }.to_not change(widget, :updated_at)
     end
+
+    it "should update the global counter cache column with all impressions" do
+      expect {
+        widget.impressions.create(:request_hash => 'abcd1234')
+        widget.impressions.create(:request_hash => 'abcd123456').update_attribute(:created_at, Time.now - 1.day)
+        widget.impressions.create(:request_hash => 'abcd12345').update_attribute(:created_at, Time.now - 14.day)
+        widget.reload
+      }.to change(widget, :impressions_count).from(0).to(3)
+    end
+
+    it "should update the extended counter cache column with the proper impressions count" do
+      expect {
+        widget.impressions.create(:request_hash => 'abcd1234')
+        widget.impressions.create(:request_hash => 'abcd123456').update_attribute(:created_at, Time.now - 1.day)
+        widget.impressions.create(:request_hash => 'abcd12345').update_attribute(:created_at, Time.now - 14.day)
+        widget.reload
+      }.to change(widget, :impressions_count_7).from(0).to(2)
+    end
+
   end
 
 end

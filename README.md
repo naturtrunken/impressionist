@@ -168,6 +168,14 @@ Any option you pass to unique, impressionist_count will use it as its filter to 
     is_impressionable :counter_cache => true, :column_name => :my_column_name, :unique => :request_hash
     is_impressionable :counter_cache => true, :column_name => :my_column_name, :unique => :all
 
+You can also define multiple extended counter caches for different time periods. Just add a hash
+with one or more column names (you have to create them manually) and the timespan.
+
+  # counter cache with all impressions in the default 'impressions_count' column
+  # and an additionally counter cache for the impressions of the last 14 days,
+  # stored in the 'impressions_count_14' column.
+  is_impressionable :counter_cache => true, :extended_counter_cache => { 'impressions_count_14' => -14.day }
+
 
 Adding column to model
 ----------------------

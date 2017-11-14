@@ -14,6 +14,21 @@ module Impressionist
     def update
       klass.
       update_counters(id, column_name => result)
+
+      # Updates the extended counter cache(s).
+      cache_options[:extended_counter_cache].each do |k, v|
+        @receiver.update_column(
+          k,
+          receiver.impressionist_count(
+            filter.merge(
+              {
+                :start_date => Time.now + v,
+                :end_date => Time.now
+              }
+            )
+          )
+        )
+      end
     end
 
     private
@@ -65,7 +80,7 @@ module Impressionist
 
     def cache_options
       klass.
-      impressionist_counter_cache_options
+        impressionist_counter_cache_options
     end
 
     def id

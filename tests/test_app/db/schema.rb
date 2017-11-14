@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150207140310) do
+ActiveRecord::Schema.define(:version => 20171113200426) do
 
   create_table "articles", :force => true do |t|
     t.string   "name"
@@ -72,9 +72,10 @@ ActiveRecord::Schema.define(:version => 20150207140310) do
 
   create_table "widgets", :force => true do |t|
     t.string   "name"
-    t.integer  "impressions_count", :default => 0
-    t.datetime "created_at",                       :null => false
-    t.datetime "updated_at",                       :null => false
+    t.integer  "impressions_count",   :default => 0
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
+    t.integer  "impressions_count_7", :default => 0
   end
 
 end
